@@ -7,14 +7,14 @@
 
 <meta name="description" content="Data scientist and biochemist applying AI and machine learning to health, microbiome, and mental health research. Based in Kelowna, BC." />
 <meta name="author" content="Nijiati Abulizi" />
-<meta name="theme-color" content="#0b1120" />
+<meta name="theme-color" content="#100f12" />
 
 <meta property="og:title" content="Nijiati Abulizi — Data Scientist & Biochemist" />
 <meta property="og:description" content="Applying AI and data science to health, microbiome, and mental health research." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://nijiati-abulizi.github.io" />
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%236366f1'/%3E%3Ctext x='50' y='71' font-family='Georgia,serif' font-size='58' font-weight='700' text-anchor='middle' fill='%23fff'%3EN%3C/text%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23a51022'/%3E%3Ctext x='50' y='71' font-family='Georgia,serif' font-size='58' font-weight='700' text-anchor='middle' fill='%23fff'%3EN%3C/text%3E%3C/svg%3E" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,26 +27,28 @@
      Design tokens — dark "data" theme + light theme
      ============================================================ */
   :root {
-    --bg:            #0b1120;
-    --bg-2:          #0f172a;
+    --bg:            #100f12;
+    --bg-2:          #181519;
     --surface:       rgba(255, 255, 255, 0.03);
-    --surface-2:     rgba(255, 255, 255, 0.05);
-    --border:        rgba(148, 163, 184, 0.14);
-    --border-strong: rgba(148, 163, 184, 0.28);
+    --surface-2:     rgba(255, 255, 255, 0.055);
+    --border:        rgba(220, 210, 212, 0.13);
+    --border-strong: rgba(220, 210, 212, 0.26);
 
-    --text:          #e9eef7;
-    --text-muted:    #aab4c5;
-    --text-subtle:   #7c879b;
+    --text:          #f1ebec;
+    --text-muted:    #b9aeb0;
+    --text-subtle:   #897e80;
 
-    --accent:        #4f8ef7;   /* UBC blue   */
-    --accent-2:      #38bdf8;   /* azure      */
-    --accent-3:      #d05068;   /* burgundy   */
-    --accent-4:      #34d399;   /* green      */
-    --accent-5:      #e0a82e;   /* gold       */
-    --accent-soft:   rgba(79, 142, 247, 0.14);
+    /* Single brand color — BitSize crimson */
+    --accent:        #cf2535;   /* crimson (dark-theme legible) */
+    --accent-2:      var(--accent);
+    --accent-3:      var(--accent);
+    --accent-4:      var(--accent);
+    --accent-5:      var(--accent);
+    --accent-soft:   rgba(207, 37, 53, 0.14);
 
-    --grad:          linear-gradient(120deg, #2f6fed 0%, #38bdf8 100%);
-    --grad-warm:     linear-gradient(120deg, #d05068 0%, #4f8ef7 100%);
+    /* No gradients — flat brand color */
+    --grad:          var(--accent);
+    --grad-warm:     var(--accent);
 
     --font-display:  'Sora', system-ui, -apple-system, 'Segoe UI', sans-serif;
     --font-sans:     'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -59,25 +61,21 @@
   }
 
   html[data-theme="light"] {
-    --bg:            #f6f7fb;
-    --bg-2:          #eef1f8;
-    --surface:       rgba(15, 23, 42, 0.02);
-    --surface-2:     rgba(15, 23, 42, 0.04);
-    --border:        rgba(15, 23, 42, 0.10);
-    --border-strong: rgba(15, 23, 42, 0.18);
+    --bg:            #f8f6f5;
+    --bg-2:          #efeae9;
+    --surface:       rgba(20, 12, 13, 0.02);
+    --surface-2:     rgba(20, 12, 13, 0.045);
+    --border:        rgba(20, 12, 13, 0.11);
+    --border-strong: rgba(20, 12, 13, 0.20);
 
-    --text:          #0f172a;
-    --text-muted:    #475569;
-    --text-subtle:   #64748b;
+    --text:          #1a1416;
+    --text-muted:    #5a4f51;
+    --text-subtle:   #897e80;
 
-    --accent:        #0055b7;   /* UBC blue   */
-    --accent-2:      #0e7aa8;   /* deep azure */
-    --accent-3:      #9b2235;   /* burgundy   */
-    --accent-4:      #047857;   /* green      */
-    --accent-5:      #b07d11;   /* gold       */
-    --accent-soft:   rgba(0, 85, 183, 0.10);
+    --accent:        #a51022;   /* dark crimson (BitSize brand) */
+    --accent-soft:   rgba(165, 16, 34, 0.09);
 
-    --shadow:        0 1px 0 rgba(255,255,255,0.6) inset, 0 18px 40px -28px rgba(15,23,42,0.35);
+    --shadow:        0 1px 0 rgba(255,255,255,0.6) inset, 0 18px 40px -28px rgba(26,20,22,0.30);
   }
 
   /* ============================================================
@@ -141,9 +139,7 @@
     z-index: 0;
     pointer-events: none;
     background:
-      radial-gradient(60% 50% at 12% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%),
-      radial-gradient(55% 45% at 100% 12%, color-mix(in srgb, var(--accent-2) 16%, transparent), transparent 60%),
-      radial-gradient(50% 40% at 70% 100%, color-mix(in srgb, var(--accent-3) 12%, transparent), transparent 60%);
+      radial-gradient(58% 48% at 15% -5%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%);
   }
 
   /* ============================================================
@@ -267,7 +263,7 @@
   .section-head .rule {
     flex: 1;
     height: 1px;
-    background: linear-gradient(90deg, var(--border-strong), transparent);
+    background: var(--border);
     align-self: center;
   }
 
@@ -487,9 +483,9 @@
     display: inline-flex; align-items: center; gap: 0.45rem;
     transition: border-color 0.2s, color 0.2s, background 0.2s;
   }
-  .leg .swatch { width: 9px; height: 9px; border-radius: 50%; background: var(--c); }
-  .leg:hover { color: var(--text); border-color: var(--border-strong); }
-  .leg.off { opacity: 0.4; }
+  .leg:hover { color: var(--text); border-color: var(--accent); }
+  .leg.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .leg.off { opacity: 0.45; }
 
   .bubbles {
     display: flex;
@@ -511,10 +507,9 @@
     line-height: 1.15;
     padding: 0.5rem;
     color: var(--text);
-    background:
-      radial-gradient(circle at 32% 28%, color-mix(in srgb, var(--c) 32%, transparent), color-mix(in srgb, var(--c) 9%, transparent) 70%);
-    border: 1px solid color-mix(in srgb, var(--c) 45%, transparent);
-    box-shadow: 0 8px 22px -14px var(--c);
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 42%, transparent);
+    box-shadow: 0 8px 22px -14px var(--accent);
     transition: transform 0.25s cubic-bezier(.22,1,.36,1), opacity 0.3s ease, box-shadow 0.25s;
     cursor: default;
     animation: float 7s ease-in-out infinite;
@@ -594,7 +589,8 @@
     position: absolute;
     left: 7px; top: 6px; bottom: 6px;
     width: 2px;
-    background: linear-gradient(180deg, var(--accent), var(--accent-2), transparent);
+    background: var(--accent);
+    opacity: 0.5;
   }
   .tl-item {
     position: relative;
@@ -869,11 +865,11 @@
       <div class="chart-title">The toolkit I reach for</div>
       <div class="chart-sub">Grouped by domain, not ranked — tap a category to highlight it.</div>
       <div class="bubble-legend" id="legend">
-        <button class="leg" data-cat="lang"  style="--c:var(--accent)"><span class="swatch"></span>Languages</button>
-        <button class="leg" data-cat="ml"    style="--c:var(--accent-3)"><span class="swatch"></span>ML &amp; Deep Learning</button>
-        <button class="leg" data-cat="bio"   style="--c:var(--accent-4)"><span class="swatch"></span>Bioinformatics</button>
-        <button class="leg" data-cat="viz"   style="--c:var(--accent-2)"><span class="swatch"></span>Viz &amp; Apps</button>
-        <button class="leg" data-cat="eng"   style="--c:var(--accent-5)"><span class="swatch"></span>Engineering</button>
+        <button class="leg" data-cat="lang">Languages</button>
+        <button class="leg" data-cat="ml">ML &amp; Deep Learning</button>
+        <button class="leg" data-cat="bio">Bioinformatics</button>
+        <button class="leg" data-cat="viz">Viz &amp; Apps</button>
+        <button class="leg" data-cat="eng">Engineering</button>
       </div>
       <div class="bubbles" id="bubbles">
         <span class="bubble lg" data-cat="lang" style="--c:var(--accent)">Python</span>
@@ -1353,10 +1349,10 @@
     var cs = getComputedStyle(root);
     return {
       accent: cs.getPropertyValue('--accent').trim(),
-      accent2: cs.getPropertyValue('--accent-2').trim(),
-      accent3: cs.getPropertyValue('--accent-3').trim(),
       text: cs.getPropertyValue('--text-muted').trim(),
-      grid: cs.getPropertyValue('--border').trim()
+      subtle: cs.getPropertyValue('--text-subtle').trim(),
+      grid: cs.getPropertyValue('--border').trim(),
+      tip: cs.getPropertyValue('--bg-2').trim()
     };
   }
   function hexA(hex, a) {
@@ -1376,9 +1372,6 @@
 
     var pctx = document.getElementById('pubchart');
     if (pctx) {
-      var g = pctx.getContext('2d').createLinearGradient(0, 0, 0, 220);
-      g.addColorStop(0, hexA(col.accent, 0.9));
-      g.addColorStop(1, hexA(col.accent2, 0.6));
       pubChart = new Chart(pctx, {
         type: 'bar',
         data: {
@@ -1386,18 +1379,33 @@
           datasets: [{
             label: 'Publications',
             data: [1, 1, 1, 1, 2],
-            backgroundColor: g,
-            borderRadius: 6,
-            maxBarThickness: 46
+            backgroundColor: col.accent,
+            hoverBackgroundColor: col.accent,
+            borderRadius: 5,
+            borderSkipped: false,
+            maxBarThickness: 40
           }]
         },
         options: {
           responsive: true, maintainAspectRatio: false,
-          animation: reduce ? false : { duration: 1100 },
-          plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(c){ return c.parsed.y + ' paper' + (c.parsed.y>1?'s':''); } } } },
+          animation: reduce ? false : { duration: 900, easing: 'easeOutQuart' },
+          layout: { padding: { top: 6 } },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: col.tip, titleColor: col.text, bodyColor: col.text,
+              borderColor: col.grid, borderWidth: 1, padding: 10, displayColors: false,
+              callbacks: { label: function (c) { return c.parsed.y + ' paper' + (c.parsed.y > 1 ? 's' : ''); } }
+            }
+          },
           scales: {
-            x: { grid: { display: false }, ticks: { color: col.text } },
-            y: { beginAtZero: true, ticks: { stepSize: 1, color: col.text }, grid: { color: col.grid } }
+            x: { grid: { display: false }, border: { display: false }, ticks: { color: col.text, font: { size: 11 } } },
+            y: {
+              beginAtZero: true, max: 2,
+              border: { display: false },
+              ticks: { stepSize: 1, color: col.subtle, padding: 8, font: { size: 10 } },
+              grid: { color: col.grid, drawTicks: false }
+            }
           }
         }
       });
@@ -1420,7 +1428,9 @@
         b.classList.toggle('dim', active && b.getAttribute('data-cat') !== active);
       });
       legend.querySelectorAll('.leg').forEach(function (l) {
-        l.classList.toggle('off', active && l.getAttribute('data-cat') !== active);
+        var match = l.getAttribute('data-cat') === active;
+        l.classList.toggle('off', active && !match);
+        l.classList.toggle('on', match);
       });
     }
     legend.addEventListener('click', function (e) {
