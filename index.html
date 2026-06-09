@@ -39,12 +39,12 @@
     --text-subtle:   #897e80;
 
     /* Single brand color — BitSize crimson */
-    --accent:        #cf2535;   /* crimson (dark-theme legible) */
+    --accent:        #be1326;   /* deep crimson (dark-theme legible) */
     --accent-2:      var(--accent);
     --accent-3:      var(--accent);
     --accent-4:      var(--accent);
     --accent-5:      var(--accent);
-    --accent-soft:   rgba(207, 37, 53, 0.14);
+    --accent-soft:   rgba(190, 19, 38, 0.16);
 
     /* No gradients — flat brand color */
     --grad:          var(--accent);
@@ -72,8 +72,8 @@
     --text-muted:    #5a4f51;
     --text-subtle:   #897e80;
 
-    --accent:        #a51022;   /* dark crimson (BitSize brand) */
-    --accent-soft:   rgba(165, 16, 34, 0.09);
+    --accent:        #7e0c19;   /* deep dark crimson (BitSize brand) */
+    --accent-soft:   rgba(126, 12, 25, 0.10);
 
     --shadow:        0 1px 0 rgba(255,255,255,0.6) inset, 0 18px 40px -28px rgba(26,20,22,0.30);
   }
@@ -492,11 +492,12 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 0.7rem;
+    gap: 0.6rem;
     padding: 0.5rem 0;
   }
   .bubble {
-    --c: var(--accent);
+    --dur: 7s; --delay: 0s; --dx: 0px; --dy: -10px;
+    position: relative;
     display: grid;
     place-items: center;
     text-align: center;
@@ -507,31 +508,53 @@
     line-height: 1.15;
     padding: 0.5rem;
     color: var(--text);
-    background: color-mix(in srgb, var(--accent) 12%, transparent);
-    border: 1px solid color-mix(in srgb, var(--accent) 42%, transparent);
-    box-shadow: 0 8px 22px -14px var(--accent);
-    transition: transform 0.25s cubic-bezier(.22,1,.36,1), opacity 0.3s ease, box-shadow 0.25s;
+    background: color-mix(in srgb, var(--accent) 9%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
+    transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), opacity 0.3s ease, box-shadow 0.3s, background 0.3s;
     cursor: default;
-    animation: float 7s ease-in-out infinite;
+    animation: float var(--dur) ease-in-out var(--delay) infinite;
     will-change: transform;
   }
-  .bubble.sm { width: clamp(74px, 17vw, 92px); }
-  .bubble.md { width: clamp(92px, 21vw, 116px); font-size: 0.82rem; }
-  .bubble.lg { width: clamp(112px, 26vw, 146px); font-size: 0.9rem; font-weight: 600; }
-  .bubble:nth-child(odd)  { animation-duration: 8.5s; }
-  .bubble:nth-child(3n)   { animation-duration: 6.2s; animation-delay: -2s; }
-  .bubble:nth-child(4n)   { animation-delay: -4s; }
+  /* Domains = my home turf: solid crimson, white text, glow */
+  .bubble.core {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 10px 30px -10px var(--accent), 0 0 0 0 var(--accent-soft);
+  }
+  .bubble.sm { width: clamp(70px, 16vw, 88px); }
+  .bubble.md { width: clamp(88px, 20vw, 112px); font-size: 0.8rem; }
+  .bubble.lg { width: clamp(110px, 24vw, 140px); font-size: 0.88rem; }
+  .bubble.xl { width: clamp(132px, 30vw, 168px); font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; }
   .bubble:hover {
-    transform: translateY(-6px) scale(1.08);
-    box-shadow: 0 16px 32px -14px var(--c);
-    z-index: 3;
+    transform: translateY(-7px) scale(1.09) !important;
+    box-shadow: 0 20px 40px -14px var(--accent);
+    z-index: 5;
   }
-  .bubble.dim { opacity: 0.18; filter: grayscale(0.5); }
+  .bubble.core:hover { background: var(--accent); }
+  .bubble.dim { opacity: 0.14; filter: saturate(0.4); }
   @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-9px); }
+    0%, 100% { transform: translate(0, 0); }
+    50%      { transform: translate(var(--dx), var(--dy)); }
   }
-  @media (prefers-reduced-motion: reduce) { .bubble { animation: none; } }
+  /* gentle pulse ring on domain bubbles */
+  .bubble.core::after {
+    content: '';
+    position: absolute; inset: -1px;
+    border-radius: 50%;
+    border: 1px solid var(--accent);
+    opacity: 0;
+    animation: ring 4.5s ease-out var(--delay) infinite;
+  }
+  @keyframes ring {
+    0%   { transform: scale(1); opacity: 0.5; }
+    70%, 100% { transform: scale(1.5); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bubble { animation: none; }
+    .bubble.core::after { animation: none; }
+  }
 
   .metric-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
   .mtile {
@@ -805,11 +828,11 @@
 
   <!-- Hero -->
   <header class="hero">
-    <div class="eyebrow">Data Scientist · Biochemist · Kelowna, BC</div>
-    <h1>Turning biomedical<br />data into <span class="grad">clinical insight.</span></h1>
+    <div class="eyebrow">Biochemist · Molecular Biology · ML &amp; AI · Kelowna, BC</div>
+    <h1>Biochemist who<br />builds with <span class="grad">AI.</span></h1>
     <div class="typed" id="typed"><span class="cursor">_</span></div>
     <p class="lede">
-      I build <b>machine-learning and survival-analysis systems</b> for healthcare and life-sciences research — from <b>multi-modal tumor profiling</b> and <b>gut-microbiome ecology</b> to <b>mental-health prediction</b>. Explainable models that clinicians and researchers can actually trust and use.
+      Bachelor's and master's in <b>biochemistry &amp; molecular biology</b> — that's home. I use <b>machine learning and deep learning</b> as tools to crack hard problems in <b>biology, medicine, and bioinformatics</b>. Bring me a tough dataset; let's solve it together.
     </p>
     <div class="cta">
       <a class="btn btn-primary" href="mailto:nijiati.abulizi@ubc.ca">
@@ -827,7 +850,7 @@
     </div>
 
     <div class="stat-strip">
-      <div class="stat"><div class="num" data-count="7">0</div><div class="label">Publications</div></div>
+      <div class="stat"><div class="num" data-count="6">0</div><div class="label">Publications</div></div>
       <div class="stat"><div class="num" data-count="28500" data-suffix="+">0</div><div class="label">Paper views</div></div>
       <div class="stat"><div class="num" data-count="4900" data-suffix="+">0</div><div class="label">Downloads</div></div>
       <div class="stat"><div class="num" data-count="140" data-suffix="k+">0</div><div class="label">Records modeled</div></div>
@@ -842,14 +865,16 @@
       <span class="rule"></span>
     </div>
     <div class="card about">
-      <p>Data scientist and biochemist building ML systems for healthcare and life-sciences research. I design <em>survival-analysis and machine-learning workflows for high-dimensional omics data</em> — currently focused on multi-modal tumor profiling (gene expression and methylation), with prior work in gut microbiome and mental-health prediction. Built around explainable models that clinicians and researchers can actually trust and use.</p>
+      <p>I'm a <em>biochemist and molecular biologist</em> first — trained through a bachelor's and master's in the field. Machine learning and deep learning are how I go further: tools to decode <em>multi-omics, microbiome, and clinical data</em>. The biology is the point; the models just get me there. I build interpretable work that researchers trust — and I'm at my best collaborating on a problem that matters.</p>
       <div class="focus-chips">
-        <span class="chip">Multi-modal omics</span>
-        <span class="chip">Survival analysis</span>
-        <span class="chip">Explainable AI / SHAP</span>
+        <span class="chip">Biochemistry</span>
+        <span class="chip">Molecular biology</span>
+        <span class="chip">Bioinformatics</span>
+        <span class="chip">Multi-omics</span>
         <span class="chip">Microbiome ecology</span>
+        <span class="chip">Machine learning</span>
         <span class="chip">Deep learning</span>
-        <span class="chip">Bayesian inference</span>
+        <span class="chip">Explainable AI</span>
       </div>
     </div>
   </section>
@@ -858,47 +883,43 @@
   <section id="skills" class="reveal">
     <div class="section-head">
       <span class="section-num">02</span>
-      <h2>Skills &amp; Tooling</h2>
+      <h2>Domains &amp; Tools</h2>
       <span class="rule"></span>
     </div>
     <div class="card">
-      <div class="chart-title">The toolkit I reach for</div>
-      <div class="chart-sub">Grouped by domain, not ranked — tap a category to highlight it.</div>
+      <div class="chart-title">The problems I love — and the tools I solve them with</div>
+      <div class="chart-sub">Filled bubbles are my home turf; outlines are the toolkit. Tap a group to focus it.</div>
       <div class="bubble-legend" id="legend">
+        <button class="leg" data-cat="dom">Domains</button>
         <button class="leg" data-cat="lang">Languages</button>
-        <button class="leg" data-cat="ml">ML &amp; Deep Learning</button>
-        <button class="leg" data-cat="bio">Bioinformatics</button>
-        <button class="leg" data-cat="viz">Viz &amp; Apps</button>
-        <button class="leg" data-cat="eng">Engineering</button>
+        <button class="leg" data-cat="ml">ML &amp; AI</button>
+        <button class="leg" data-cat="tool">Tools</button>
       </div>
       <div class="bubbles" id="bubbles">
-        <span class="bubble lg" data-cat="lang" style="--c:var(--accent)">Python</span>
-        <span class="bubble lg" data-cat="lang" style="--c:var(--accent)">R</span>
-        <span class="bubble md" data-cat="lang" style="--c:var(--accent)">SQL</span>
+        <span class="bubble core xl" data-cat="dom">Biochemistry</span>
+        <span class="bubble core lg" data-cat="dom">Molecular biology</span>
+        <span class="bubble core lg" data-cat="dom">Bioinformatics</span>
+        <span class="bubble core md" data-cat="dom">Microbiome</span>
+        <span class="bubble core md" data-cat="dom">Multi&#8209;omics</span>
+        <span class="bubble core md" data-cat="dom">Medical data</span>
+        <span class="bubble core md" data-cat="dom">Statistics</span>
 
-        <span class="bubble lg" data-cat="ml" style="--c:var(--accent-3)">scikit&#8209;learn</span>
-        <span class="bubble md" data-cat="ml" style="--c:var(--accent-3)">Keras</span>
-        <span class="bubble md" data-cat="ml" style="--c:var(--accent-3)">SHAP</span>
-        <span class="bubble lg" data-cat="ml" style="--c:var(--accent-3)">Survival analysis</span>
-        <span class="bubble sm" data-cat="ml" style="--c:var(--accent-3)">Random Forest</span>
-        <span class="bubble sm" data-cat="ml" style="--c:var(--accent-3)">TCN</span>
-        <span class="bubble sm" data-cat="ml" style="--c:var(--accent-3)">NLP</span>
+        <span class="bubble lg" data-cat="lang">Python</span>
+        <span class="bubble md" data-cat="lang">R</span>
+        <span class="bubble sm" data-cat="lang">SQL</span>
 
-        <span class="bubble md" data-cat="bio" style="--c:var(--accent-4)">Multi&#8209;omics</span>
-        <span class="bubble sm" data-cat="bio" style="--c:var(--accent-4)">QIIME</span>
-        <span class="bubble md" data-cat="bio" style="--c:var(--accent-4)">Microbiome</span>
-        <span class="bubble sm" data-cat="bio" style="--c:var(--accent-4)">Proteomics</span>
-        <span class="bubble sm" data-cat="bio" style="--c:var(--accent-4)">db&#8209;RDA</span>
+        <span class="bubble lg" data-cat="ml">Deep learning</span>
+        <span class="bubble md" data-cat="ml">scikit&#8209;learn</span>
+        <span class="bubble sm" data-cat="ml">Keras</span>
+        <span class="bubble sm" data-cat="ml">SHAP</span>
+        <span class="bubble sm" data-cat="ml">Random Forest</span>
+        <span class="bubble sm" data-cat="ml">NLP</span>
 
-        <span class="bubble md" data-cat="viz" style="--c:var(--accent-2)">Dash</span>
-        <span class="bubble sm" data-cat="viz" style="--c:var(--accent-2)">Jupyter</span>
-        <span class="bubble sm" data-cat="viz" style="--c:var(--accent-2)">RMarkdown</span>
-        <span class="bubble md" data-cat="viz" style="--c:var(--accent-2)">Bayesian</span>
-
-        <span class="bubble lg" data-cat="eng" style="--c:var(--accent-5)">Django</span>
-        <span class="bubble md" data-cat="eng" style="--c:var(--accent-5)">PostgreSQL</span>
-        <span class="bubble sm" data-cat="eng" style="--c:var(--accent-5)">Git</span>
-        <span class="bubble sm" data-cat="eng" style="--c:var(--accent-5)">Cloudflare R2</span>
+        <span class="bubble md" data-cat="tool">Dash</span>
+        <span class="bubble sm" data-cat="tool">Jupyter</span>
+        <span class="bubble sm" data-cat="tool">QIIME</span>
+        <span class="bubble sm" data-cat="tool">Git</span>
+        <span class="bubble sm" data-cat="tool">Django</span>
       </div>
     </div>
   </section>
@@ -922,12 +943,12 @@
           <div class="tl-top"><h3>Research Data Scientist</h3><span class="tl-when">2025 — Now</span></div>
           <div class="tl-where">Brain Tumor AI Research · Thompson Rivers University</div>
           <ul>
-            <li>Build ML and survival-analysis workflows for brain-tumor classification and patient-outcome prediction from multi-modal molecular data (gene expression &amp; DNA methylation)</li>
-            <li>Co-authored a published multi-modal pipeline (Mamatjan &amp; Abulizi, <em>Electronics</em> 2025) that flags tumors misclassified by traditional histology</li>
-            <li>Implement feature-selection pipelines and SHAP-based interpretability so predictions can be reasoned about by clinicians</li>
-            <li>Develop interactive Dash apps; designed the lab's standard end-to-end ML workflow and mentor graduate students</li>
+            <li>Apply ML and deep learning to brain-tumor biology — subtyping and outcome prediction from multi-omics (gene expression + DNA methylation)</li>
+            <li>Co-authored a published pipeline (Mamatjan &amp; Abulizi, <em>Electronics</em> 2025) that catches tumors misdiagnosed by histology</li>
+            <li>Build interpretable, SHAP-backed models clinicians trust; ship interactive Dash apps</li>
+            <li>Designed the lab's standard ML workflow; mentor graduate students</li>
           </ul>
-          <div class="tags"><span class="tag">Survival analysis</span><span class="tag">SHAP</span><span class="tag">Dash</span><span class="tag">Multi-omics</span></div>
+          <div class="tags"><span class="tag">Multi-omics</span><span class="tag">Deep learning</span><span class="tag">SHAP</span><span class="tag">Dash</span></div>
         </div>
       </div>
 
@@ -936,11 +957,11 @@
           <div class="tl-top"><h3>Health Research Data Analyst</h3><span class="tl-when">May — Sep 2024</span></div>
           <div class="tl-where">University of Calgary</div>
           <ul>
-            <li>Surfaced novel host–microbiome relationships in clinical cohort data using db-RDA and related ordination analyses</li>
-            <li>Productionized recurring analyses by automating R and Python pipelines — cut analyst turnaround time by ~40%</li>
-            <li>Presented findings to PIs, clinicians, and program stakeholders; recommendations fed into study design</li>
+            <li>Surfaced novel host–microbiome links in clinical cohorts using db-RDA and ordination analysis</li>
+            <li>Automated recurring R/Python pipelines — cut analyst turnaround ~40%</li>
+            <li>Briefed PIs and clinicians; findings shaped ongoing study design</li>
           </ul>
-          <div class="tags"><span class="tag">db-RDA</span><span class="tag">R</span><span class="tag">Python</span></div>
+          <div class="tags"><span class="tag">Microbiome</span><span class="tag">db-RDA</span><span class="tag">R</span></div>
         </div>
       </div>
 
@@ -949,11 +970,11 @@
           <div class="tl-top"><h3>ML Data Scientist — Capstone</h3><span class="tl-when">May — Jul 2024</span></div>
           <div class="tl-where">GreenspaceHealth</div>
           <ul>
-            <li>Engineered the full ML pipeline on <b>140,000+ patient records</b> across 14 SQL tables — cleaning, feature engineering, leakage checks</li>
-            <li>Improved PHQ-9 mental-health prediction accuracy by ~30% benchmarking Random Forest vs. Temporal Convolutional Networks</li>
-            <li>Delivered executive summary and technical handoff to the GreenspaceHealth CEO and academic advisors</li>
+            <li>Built the full ML pipeline on <b>140k+ patient records</b> across 14 SQL tables</li>
+            <li>Lifted PHQ-9 depression-screening accuracy ~30% (Random Forest vs. Temporal CNNs)</li>
+            <li>Delivered the technical handoff to the CEO and academic advisors</li>
           </ul>
-          <div class="tags"><span class="tag">Random Forest</span><span class="tag">TCN</span><span class="tag">SQL</span></div>
+          <div class="tags"><span class="tag">Deep learning</span><span class="tag">Random Forest</span><span class="tag">SQL</span></div>
         </div>
       </div>
 
@@ -962,9 +983,9 @@
           <div class="tl-top"><h3>Research Data Consultant</h3><span class="tl-when">2023 — 2024</span></div>
           <div class="tl-where">UBC Okanagan</div>
           <ul>
-            <li>Embedded with 30+ graduate researchers, advising on study design, statistical modeling, and visualization</li>
-            <li>Designed reusable RMarkdown and Jupyter templates that became the default starting point for new projects</li>
-            <li>Ran 1:1 sessions translating complex datasets into publication-ready figures and tables</li>
+            <li>Advised 30+ grad researchers on study design, modeling, and visualization</li>
+            <li>Built reusable RMarkdown/Jupyter templates adopted across new projects</li>
+            <li>Turned messy datasets into publication-ready figures, 1:1</li>
           </ul>
         </div>
       </div>
@@ -1049,17 +1070,17 @@
     </div>
     <div class="grid-2" style="margin-bottom:1.4rem;">
       <div class="card chart-card">
-        <div class="chart-title">Publications over time</div>
-        <div class="chart-sub">7 peer-reviewed papers · 28,500+ views · 4,900+ downloads</div>
+        <div class="chart-title">Research, compounding</div>
+        <div class="chart-sub">6 peer-reviewed papers · 28.5k+ reads · 4.9k+ downloads</div>
         <div class="chart-wrap" style="min-height:220px;"><canvas id="pubchart"></canvas></div>
       </div>
       <div class="card" style="display:flex;flex-direction:column;justify-content:center;gap:1.1rem;">
         <div class="chart-title">Impact at a glance</div>
         <div class="metric-tiles">
-          <div class="mtile"><div class="mnum">28.5k<span>+</span></div><div class="mlabel">Paper views</div></div>
+          <div class="mtile"><div class="mnum">6</div><div class="mlabel">Publications</div></div>
+          <div class="mtile"><div class="mnum">28.5k<span>+</span></div><div class="mlabel">Reads</div></div>
           <div class="mtile"><div class="mnum">4.9k<span>+</span></div><div class="mlabel">Downloads</div></div>
-          <div class="mtile"><div class="mnum">7</div><div class="mlabel">Publications</div></div>
-          <div class="mtile"><div class="mnum">5</div><div class="mlabel">Journals</div></div>
+          <div class="mtile"><div class="mnum">6</div><div class="mlabel">Journals</div></div>
         </div>
         <p style="font-size:0.85rem;color:var(--text-subtle);margin-top:0.2rem;">
           Full list on <a class="link" href="https://loop.frontiersin.org/people/479582/publications" target="_blank" rel="noopener">Frontiers Loop ↗</a>
@@ -1180,11 +1201,12 @@
 
   /* ---------- Typing effect ---------- */
   var phrases = [
-    'survival_analysis(omics).fit()',
-    'predict("brain tumor subtype")',
-    'shap.explain(model)  # trust the output',
+    'biochemistry + machine_learning',
+    'classify(tumor_subtype, from=omics)',
     'microbiome → ecology → insight',
-    'RandomForest vs. TCN → +30% accuracy'
+    'deep_learning.solve(biology)',
+    'shap.explain(model)  # interpretable',
+    "let's collaborate →"
   ];
   var typedEl = document.getElementById('typed');
   var cursor = '<span class="cursor">_</span>';
@@ -1352,7 +1374,8 @@
       text: cs.getPropertyValue('--text-muted').trim(),
       subtle: cs.getPropertyValue('--text-subtle').trim(),
       grid: cs.getPropertyValue('--border').trim(),
-      tip: cs.getPropertyValue('--bg-2').trim()
+      tip: cs.getPropertyValue('--bg-2').trim(),
+      bg: cs.getPropertyValue('--bg').trim()
     };
   }
   function hexA(hex, a) {
@@ -1373,37 +1396,42 @@
     var pctx = document.getElementById('pubchart');
     if (pctx) {
       pubChart = new Chart(pctx, {
-        type: 'bar',
+        type: 'line',
         data: {
           labels: ['2016', '2017', '2019', '2024', '2025'],
           datasets: [{
-            label: 'Publications',
-            data: [1, 1, 1, 1, 2],
-            backgroundColor: col.accent,
-            hoverBackgroundColor: col.accent,
-            borderRadius: 5,
-            borderSkipped: false,
-            maxBarThickness: 40
+            label: 'Cumulative publications',
+            data: [1, 2, 3, 4, 6],
+            borderColor: col.accent,
+            borderWidth: 2.5,
+            backgroundColor: hexA(col.accent, 0.10),
+            fill: true,
+            tension: 0.4,
+            pointBackgroundColor: col.accent,
+            pointBorderColor: col.bg,
+            pointBorderWidth: 2,
+            pointRadius: 4,
+            pointHoverRadius: 6
           }]
         },
         options: {
           responsive: true, maintainAspectRatio: false,
-          animation: reduce ? false : { duration: 900, easing: 'easeOutQuart' },
-          layout: { padding: { top: 6 } },
+          animation: reduce ? false : { duration: 1100, easing: 'easeOutQuart' },
+          layout: { padding: { top: 8 } },
           plugins: {
             legend: { display: false },
             tooltip: {
               backgroundColor: col.tip, titleColor: col.text, bodyColor: col.text,
               borderColor: col.grid, borderWidth: 1, padding: 10, displayColors: false,
-              callbacks: { label: function (c) { return c.parsed.y + ' paper' + (c.parsed.y > 1 ? 's' : ''); } }
+              callbacks: { label: function (c) { return c.parsed.y + ' publications by ' + c.label; } }
             }
           },
           scales: {
             x: { grid: { display: false }, border: { display: false }, ticks: { color: col.text, font: { size: 11 } } },
             y: {
-              beginAtZero: true, max: 2,
+              beginAtZero: true, suggestedMax: 6,
               border: { display: false },
-              ticks: { stepSize: 1, color: col.subtle, padding: 8, font: { size: 10 } },
+              ticks: { stepSize: 2, color: col.subtle, padding: 8, font: { size: 10 } },
               grid: { color: col.grid, drawTicks: false }
             }
           }
@@ -1422,6 +1450,21 @@
     var legend = document.getElementById('legend');
     var bubbles = document.getElementById('bubbles');
     if (!legend || !bubbles) return;
+
+    // Give every bubble its own organic drift
+    if (!reduce) {
+      bubbles.querySelectorAll('.bubble').forEach(function (b) {
+        var dur = (5.5 + Math.random() * 4).toFixed(2);
+        var delay = (-Math.random() * 6).toFixed(2);
+        var dx = (Math.random() * 14 - 7).toFixed(1);
+        var dy = (-6 - Math.random() * 10).toFixed(1);
+        b.style.setProperty('--dur', dur + 's');
+        b.style.setProperty('--delay', delay + 's');
+        b.style.setProperty('--dx', dx + 'px');
+        b.style.setProperty('--dy', dy + 'px');
+      });
+    }
+
     var active = null;
     function apply() {
       bubbles.querySelectorAll('.bubble').forEach(function (b) {
