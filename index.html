@@ -38,14 +38,15 @@
     --text-muted:    #aab4c5;
     --text-subtle:   #7c879b;
 
-    --accent:        #818cf8;   /* indigo */
-    --accent-2:      #22d3ee;   /* cyan   */
-    --accent-3:      #f472b6;   /* pink   */
-    --accent-4:      #34d399;   /* green  */
-    --accent-soft:   rgba(129, 140, 248, 0.14);
+    --accent:        #4f8ef7;   /* UBC blue   */
+    --accent-2:      #38bdf8;   /* azure      */
+    --accent-3:      #d05068;   /* burgundy   */
+    --accent-4:      #34d399;   /* green      */
+    --accent-5:      #e0a82e;   /* gold       */
+    --accent-soft:   rgba(79, 142, 247, 0.14);
 
-    --grad:          linear-gradient(120deg, #818cf8 0%, #22d3ee 100%);
-    --grad-warm:     linear-gradient(120deg, #f472b6 0%, #818cf8 100%);
+    --grad:          linear-gradient(120deg, #2f6fed 0%, #38bdf8 100%);
+    --grad-warm:     linear-gradient(120deg, #d05068 0%, #4f8ef7 100%);
 
     --font-display:  'Sora', system-ui, -apple-system, 'Segoe UI', sans-serif;
     --font-sans:     'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -69,11 +70,12 @@
     --text-muted:    #475569;
     --text-subtle:   #64748b;
 
-    --accent:        #4f46e5;
-    --accent-2:      #0891b2;
-    --accent-3:      #db2777;
-    --accent-4:      #059669;
-    --accent-soft:   rgba(79, 70, 229, 0.10);
+    --accent:        #0055b7;   /* UBC blue   */
+    --accent-2:      #0e7aa8;   /* deep azure */
+    --accent-3:      #9b2235;   /* burgundy   */
+    --accent-4:      #047857;   /* green      */
+    --accent-5:      #b07d11;   /* gold       */
+    --accent-soft:   rgba(0, 85, 183, 0.10);
 
     --shadow:        0 1px 0 rgba(255,255,255,0.6) inset, 0 18px 40px -28px rgba(15,23,42,0.35);
   }
@@ -471,6 +473,94 @@
   }
   .skill-cat::before { content:''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-2); }
 
+  /* Skill bubble cloud */
+  .bubble-legend { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.6rem; }
+  .leg {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    padding: 0.35rem 0.8rem;
+    border-radius: 99px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 0.45rem;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .leg .swatch { width: 9px; height: 9px; border-radius: 50%; background: var(--c); }
+  .leg:hover { color: var(--text); border-color: var(--border-strong); }
+  .leg.off { opacity: 0.4; }
+
+  .bubbles {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.5rem 0;
+  }
+  .bubble {
+    --c: var(--accent);
+    display: grid;
+    place-items: center;
+    text-align: center;
+    border-radius: 50%;
+    aspect-ratio: 1;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    line-height: 1.15;
+    padding: 0.5rem;
+    color: var(--text);
+    background:
+      radial-gradient(circle at 32% 28%, color-mix(in srgb, var(--c) 32%, transparent), color-mix(in srgb, var(--c) 9%, transparent) 70%);
+    border: 1px solid color-mix(in srgb, var(--c) 45%, transparent);
+    box-shadow: 0 8px 22px -14px var(--c);
+    transition: transform 0.25s cubic-bezier(.22,1,.36,1), opacity 0.3s ease, box-shadow 0.25s;
+    cursor: default;
+    animation: float 7s ease-in-out infinite;
+    will-change: transform;
+  }
+  .bubble.sm { width: clamp(74px, 17vw, 92px); }
+  .bubble.md { width: clamp(92px, 21vw, 116px); font-size: 0.82rem; }
+  .bubble.lg { width: clamp(112px, 26vw, 146px); font-size: 0.9rem; font-weight: 600; }
+  .bubble:nth-child(odd)  { animation-duration: 8.5s; }
+  .bubble:nth-child(3n)   { animation-duration: 6.2s; animation-delay: -2s; }
+  .bubble:nth-child(4n)   { animation-delay: -4s; }
+  .bubble:hover {
+    transform: translateY(-6px) scale(1.08);
+    box-shadow: 0 16px 32px -14px var(--c);
+    z-index: 3;
+  }
+  .bubble.dim { opacity: 0.18; filter: grayscale(0.5); }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-9px); }
+  }
+  @media (prefers-reduced-motion: reduce) { .bubble { animation: none; } }
+
+  .metric-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+  .mtile {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.1rem;
+  }
+  .mnum {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.7rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    background: var(--grad);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .mnum span { font-size: 1.1rem; }
+  .mlabel {
+    font-family: var(--font-mono);
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em;
+    color: var(--text-subtle); margin-top: 0.4rem;
+  }
+
   .chart-card { display: flex; flex-direction: column; }
   .chart-wrap { position: relative; flex: 1; min-height: 280px; }
   .chart-title {
@@ -775,26 +865,44 @@
       <h2>Skills &amp; Tooling</h2>
       <span class="rule"></span>
     </div>
-    <div class="grid-2">
-      <div class="card">
-        <div class="skill-block">
-          <div class="skill-cat">Languages &amp; ML</div>
-          <div class="skill-row"><div class="skill-meta"><span class="name">Python</span><span class="val">expert</span></div><div class="bar"><span data-w="96"></span></div></div>
-          <div class="skill-row"><div class="skill-meta"><span class="name">R</span><span class="val">expert</span></div><div class="bar"><span data-w="92"></span></div></div>
-          <div class="skill-row"><div class="skill-meta"><span class="name">SQL</span><span class="val">advanced</span></div><div class="bar"><span data-w="85"></span></div></div>
-          <div class="skill-row"><div class="skill-meta"><span class="name">scikit-learn / Keras</span><span class="val">advanced</span></div><div class="bar"><span data-w="90"></span></div></div>
-        </div>
-        <div class="skill-block">
-          <div class="skill-cat">Data &amp; deployment</div>
-          <div class="skill-row"><div class="skill-meta"><span class="name">Dash / data viz</span><span class="val">advanced</span></div><div class="bar"><span data-w="88"></span></div></div>
-          <div class="skill-row"><div class="skill-meta"><span class="name">Django / backend</span><span class="val">advanced</span></div><div class="bar"><span data-w="84"></span></div></div>
-          <div class="skill-row"><div class="skill-meta"><span class="name">Bioinformatics (QIIME, omics)</span><span class="val">expert</span></div><div class="bar"><span data-w="91"></span></div></div>
-        </div>
+    <div class="card">
+      <div class="chart-title">The toolkit I reach for</div>
+      <div class="chart-sub">Grouped by domain, not ranked — tap a category to highlight it.</div>
+      <div class="bubble-legend" id="legend">
+        <button class="leg" data-cat="lang"  style="--c:var(--accent)"><span class="swatch"></span>Languages</button>
+        <button class="leg" data-cat="ml"    style="--c:var(--accent-3)"><span class="swatch"></span>ML &amp; Deep Learning</button>
+        <button class="leg" data-cat="bio"   style="--c:var(--accent-4)"><span class="swatch"></span>Bioinformatics</button>
+        <button class="leg" data-cat="viz"   style="--c:var(--accent-2)"><span class="swatch"></span>Viz &amp; Apps</button>
+        <button class="leg" data-cat="eng"   style="--c:var(--accent-5)"><span class="swatch"></span>Engineering</button>
       </div>
-      <div class="card chart-card">
-        <div class="chart-title">Domain coverage</div>
-        <div class="chart-sub">Where my work concentrates across the data-science stack.</div>
-        <div class="chart-wrap"><canvas id="radar"></canvas></div>
+      <div class="bubbles" id="bubbles">
+        <span class="bubble lg" data-cat="lang" style="--c:var(--accent)">Python</span>
+        <span class="bubble lg" data-cat="lang" style="--c:var(--accent)">R</span>
+        <span class="bubble md" data-cat="lang" style="--c:var(--accent)">SQL</span>
+
+        <span class="bubble lg" data-cat="ml" style="--c:var(--accent-3)">scikit&#8209;learn</span>
+        <span class="bubble md" data-cat="ml" style="--c:var(--accent-3)">Keras</span>
+        <span class="bubble md" data-cat="ml" style="--c:var(--accent-3)">SHAP</span>
+        <span class="bubble lg" data-cat="ml" style="--c:var(--accent-3)">Survival analysis</span>
+        <span class="bubble sm" data-cat="ml" style="--c:var(--accent-3)">Random Forest</span>
+        <span class="bubble sm" data-cat="ml" style="--c:var(--accent-3)">TCN</span>
+        <span class="bubble sm" data-cat="ml" style="--c:var(--accent-3)">NLP</span>
+
+        <span class="bubble md" data-cat="bio" style="--c:var(--accent-4)">Multi&#8209;omics</span>
+        <span class="bubble sm" data-cat="bio" style="--c:var(--accent-4)">QIIME</span>
+        <span class="bubble md" data-cat="bio" style="--c:var(--accent-4)">Microbiome</span>
+        <span class="bubble sm" data-cat="bio" style="--c:var(--accent-4)">Proteomics</span>
+        <span class="bubble sm" data-cat="bio" style="--c:var(--accent-4)">db&#8209;RDA</span>
+
+        <span class="bubble md" data-cat="viz" style="--c:var(--accent-2)">Dash</span>
+        <span class="bubble sm" data-cat="viz" style="--c:var(--accent-2)">Jupyter</span>
+        <span class="bubble sm" data-cat="viz" style="--c:var(--accent-2)">RMarkdown</span>
+        <span class="bubble md" data-cat="viz" style="--c:var(--accent-2)">Bayesian</span>
+
+        <span class="bubble lg" data-cat="eng" style="--c:var(--accent-5)">Django</span>
+        <span class="bubble md" data-cat="eng" style="--c:var(--accent-5)">PostgreSQL</span>
+        <span class="bubble sm" data-cat="eng" style="--c:var(--accent-5)">Git</span>
+        <span class="bubble sm" data-cat="eng" style="--c:var(--accent-5)">Cloudflare R2</span>
       </div>
     </div>
   </section>
@@ -949,12 +1057,15 @@
         <div class="chart-sub">7 peer-reviewed papers · 28,500+ views · 4,900+ downloads</div>
         <div class="chart-wrap" style="min-height:220px;"><canvas id="pubchart"></canvas></div>
       </div>
-      <div class="card" style="display:flex;flex-direction:column;justify-content:center;gap:1rem;">
+      <div class="card" style="display:flex;flex-direction:column;justify-content:center;gap:1.1rem;">
         <div class="chart-title">Impact at a glance</div>
-        <div class="skill-row"><div class="skill-meta"><span class="name">Reach (views)</span><span class="val">28.5k+</span></div><div class="bar"><span data-w="95"></span></div></div>
-        <div class="skill-row"><div class="skill-meta"><span class="name">Downloads</span><span class="val">4.9k+</span></div><div class="bar"><span data-w="72"></span></div></div>
-        <div class="skill-row"><div class="skill-meta"><span class="name">First-author papers</span><span class="val">1</span></div><div class="bar"><span data-w="40"></span></div></div>
-        <p style="font-size:0.85rem;color:var(--text-subtle);margin-top:0.4rem;">
+        <div class="metric-tiles">
+          <div class="mtile"><div class="mnum">28.5k<span>+</span></div><div class="mlabel">Paper views</div></div>
+          <div class="mtile"><div class="mnum">4.9k<span>+</span></div><div class="mlabel">Downloads</div></div>
+          <div class="mtile"><div class="mnum">7</div><div class="mlabel">Publications</div></div>
+          <div class="mtile"><div class="mnum">5</div><div class="mlabel">Journals</div></div>
+        </div>
+        <p style="font-size:0.85rem;color:var(--text-subtle);margin-top:0.2rem;">
           Full list on <a class="link" href="https://loop.frontiersin.org/people/479582/publications" target="_blank" rel="noopener">Frontiers Loop ↗</a>
         </p>
       </div>
@@ -1255,49 +1366,13 @@
     return 'rgba(' + ((n>>16)&255) + ',' + ((n>>8)&255) + ',' + (n&255) + ',' + a + ')';
   }
 
-  var radarChart, pubChart;
+  var pubChart;
   function buildCharts() {
     if (typeof Chart === 'undefined') return;
     var col = chartColors();
     Chart.defaults.font.family = "'JetBrains Mono', monospace";
     Chart.defaults.font.size = 11;
     Chart.defaults.color = col.text;
-
-    var rctx = document.getElementById('radar');
-    if (rctx) {
-      radarChart = new Chart(rctx, {
-        type: 'radar',
-        data: {
-          labels: ['Machine\nLearning', 'Deep\nLearning', 'Statistics', 'Bioinformatics', 'Data Viz /\nApps', 'Data\nEngineering'],
-          datasets: [{
-            label: 'Proficiency',
-            data: [92, 85, 90, 95, 88, 80],
-            fill: true,
-            backgroundColor: hexA(col.accent, 0.18),
-            borderColor: col.accent,
-            borderWidth: 2,
-            pointBackgroundColor: col.accent2,
-            pointBorderColor: col.accent2,
-            pointRadius: 3.5,
-            pointHoverRadius: 6
-          }]
-        },
-        options: {
-          responsive: true, maintainAspectRatio: false,
-          animation: reduce ? false : { duration: 1100 },
-          plugins: { legend: { display: false } },
-          scales: {
-            r: {
-              suggestedMin: 0, suggestedMax: 100,
-              angleLines: { color: col.grid },
-              grid: { color: col.grid },
-              ticks: { display: false, stepSize: 25 },
-              pointLabels: { color: col.text, font: { size: 10.5 } }
-            }
-          }
-        }
-      });
-    }
 
     var pctx = document.getElementById('pubchart');
     if (pctx) {
@@ -1330,10 +1405,41 @@
   }
 
   window.__recolorCharts = function () {
-    if (radarChart) radarChart.destroy();
     if (pubChart) pubChart.destroy();
     buildCharts();
   };
+
+  /* ---------- Skill bubble cloud filter ---------- */
+  (function () {
+    var legend = document.getElementById('legend');
+    var bubbles = document.getElementById('bubbles');
+    if (!legend || !bubbles) return;
+    var active = null;
+    function apply() {
+      bubbles.querySelectorAll('.bubble').forEach(function (b) {
+        b.classList.toggle('dim', active && b.getAttribute('data-cat') !== active);
+      });
+      legend.querySelectorAll('.leg').forEach(function (l) {
+        l.classList.toggle('off', active && l.getAttribute('data-cat') !== active);
+      });
+    }
+    legend.addEventListener('click', function (e) {
+      var btn = e.target.closest('.leg');
+      if (!btn) return;
+      var cat = btn.getAttribute('data-cat');
+      active = active === cat ? null : cat;
+      apply();
+    });
+    // hover preview
+    legend.addEventListener('mouseover', function (e) {
+      var btn = e.target.closest('.leg'); if (!btn || active) return;
+      var cat = btn.getAttribute('data-cat');
+      bubbles.querySelectorAll('.bubble').forEach(function (b) {
+        b.classList.toggle('dim', b.getAttribute('data-cat') !== cat);
+      });
+    });
+    legend.addEventListener('mouseout', function () { if (!active) apply(); });
+  })();
 
   if (document.readyState === 'complete') buildCharts();
   else window.addEventListener('load', buildCharts);
